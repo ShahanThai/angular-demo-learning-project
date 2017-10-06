@@ -1,0 +1,84 @@
+
+    <div class="modal-header">
+        <h4 class="modal-title">Task Information</h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form (ngSubmit)="updateTask()" #taskForm="ngForm" novalidate>
+        <div class="modal-body">
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="input-group col-7">
+                                        <span class="input-group-addon" id="basic-addon1">
+                                            <i class="fa fa-tasks" aria-hidden="true"></i>
+                                        </span>
+                        <input type="text" class="form-control" placeholder="Name" name="name"
+                               aria-describedby="basic-addon1" [(ngModel)]="editTask.name" required
+                               #name="ngModel">
+                    </div>
+                </div>
+                <p [hidden]="(name.valid || name.pristine)" class="text-danger">Name is required!</p>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="input-group col-7">
+                            <span class="input-group-addon" id="basic-addon2" (click)="dateStart.toggle()">
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </span>
+                        <input class="form-control" placeholder="Choose start date" name="startDate"
+                               [(ngModel)]="startDate.date" ngbDatepicker #dateStart="ngbDatepicker" required disabled>
+                    </div>
+                    <ngb-timepicker [(ngModel)]="startDate.time" [ngModelOptions]="{standalone: true}" required></ngb-timepicker>
+
+                </div>
+                <p [hidden]="!formSubmitted || (formSubmitted && validation.startDate)" class="text-danger">Start date time is required!</p>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="input-group col-7">
+                            <span class="input-group-addon" id="basic-addon3" (click)="dateEnd.toggle()"><i
+                                    class="fa fa-calendar"
+                                    aria-hidden="true"></i></span>
+                        <input class="form-control" placeholder="Choose end date" name="endDate"
+                               [(ngModel)]="endDate.date" ngbDatepicker #dateEnd="ngbDatepicker" required disabled>
+                    </div>
+                    <ngb-timepicker [(ngModel)]="endDate.time" [ngModelOptions]="{standalone: true}" required></ngb-timepicker>
+
+                </div>
+                <p [hidden]="!formSubmitted || (formSubmitted && validation.endDate)" class="text-danger">End date time  is required!</p>
+            </div>
+            <p [hidden]="!formSubmitted || (formSubmitted && validation.diff)" class="text-danger">End Date Time must be greater than Start Date Time</p>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-9">
+                        <textarea class="form-control" rows="4" placeholder="Task description..." [(ngModel)]="editTask.description"
+                                  required name="description" #description="ngModel">
+                        </textarea>
+                    </div>
+                </div>
+                <p [hidden]="(description.valid || description.pristine)" class="text-danger">Description is required!</p>
+            </div>
+
+            <div class="form-group">
+                <!--<div class="row">-->
+                    <!--<div class="col-7">-->
+                        <!--<select name="position" id="uploadChoice"></select>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="col-7">
+                    <file-uploader [activeColor]="'orangered'" [baseColor]="'lightgray'" [(imageSrcs)]="imageSrcs"></file-uploader>
+                </div>
+            </div>
+            <p [hidden]="!serverError" class="text-danger">Error occured on server</p>
+
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" [disabled]="!taskForm.form.valid">{{editTask.id === -1 ? 'Add'
+                : 'Update'}}
+            </button>
+            <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+        </div>
+    </form>

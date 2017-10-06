@@ -1,0 +1,108 @@
+<div class="example-container mat-elevation-z4">
+    <div class="row">
+        <div class="col-3">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist">
+                <a class="nav-link" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab"
+                   aria-controls="v-pills-home" aria-expanded="false">Information</a>
+                <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"
+                   aria-controls="v-pills-profile" aria-expanded="false">Task</a>
+            </div>
+        </div>
+        <div class="col-9">
+            <div class="tab-content" id="v-pills-tabContent">
+
+                <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab"
+                     aria-expanded="false">
+                    <form (ngSubmit)="updateBasicInformation()" #basicForm="ngForm" novalidate>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="input-group col-7">
+                                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user-circle"
+                                                                                         aria-hidden="true"></i></span>
+                                    <input type="text" class="form-control" placeholder="Name" name="name"
+                                           aria-describedby="basic-addon1" [(ngModel)]="employee.name" required
+                                           #name="ngModel">
+                                </div>
+                            </div>
+                            <p [hidden]="(name.valid || name.pristine)" class="text-danger">Name is required!</p>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="input-group col-7">
+                                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-envelope-o"
+                                                                                         aria-hidden="true"></i></span>
+                                    <input type="text" class="form-control" placeholder="Email" name="email"
+                                           aria-describedby="basic-addon1" [(ngModel)]="employee.email" required
+                                           #email="ngModel">
+                                </div>
+                            </div>
+                            <p [hidden]="(email.valid || email.pristine)" class="text-danger">Email is
+                                required!</p>
+                            <p [hidden]="!formSubmitted || (formSubmitted && validation.email)" class="text-danger">
+                                Email is invalid</p>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="input-group col-7">
+                                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-phone"
+                                                                                         aria-hidden="true"></i></span>
+                                    <input type="tel" class="form-control" placeholder="Phone" name="phone"
+                                           aria-describedby="basic-addon1" [(ngModel)]="employee.phone" required
+                                           #phone="ngModel">
+                                </div>
+                            </div>
+                            <p [hidden]="(phone.valid || phone.pristine)" class="text-danger">Phone is
+                                required!</p>
+                            <p [hidden]="!formSubmitted || (formSubmitted && validation.phone)" class="text-danger">
+                                Phone number is invalid</p>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row align-items-center">
+                                <div class="input-group col-3">
+                                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-address-card"
+                                                                                         aria-hidden="true"></i></span>
+                                    <select name="position" [(ngModel)]="employee.position" required
+                                            style="min-width: 200px;">
+                                        <option *ngFor="let profession of professions" [value]="profession">
+                                            {{profession}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-auto">
+                                    <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                                        <input type="checkbox" class="custom-control-input"
+                                               [(ngModel)]="employee.status" name="status">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">Enable</span>
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <p [hidden]="!serverError" class="text-danger">Error occured on server</p>
+                        <p [hidden]="!updateStatus" class="text-danger">Update successfully</p>
+                        <button type="submit" class="btn btn-primary" [disabled]="!basicForm.form.valid">Update</button>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab"
+                     aria-expanded="false">
+                    <div class="example-header">
+                        <button class="btn btn-primary" href="#" (click)="open('add')">Add New Task</button>
+                        <button class="btn btn-primary" href="#" [routerLink]="['/list']">Later</button>
+                    </div>
+
+                    <md-list>
+                        <md-list-item *ngFor="let task of employee.tasks; let i = index" [attr.data-index]="i">
+                            <a (click)="open('update', task.id)">
+                                {{i+1}}. {{task.name}}
+                            </a>
+                        </md-list-item>
+                    </md-list>
+                    <button class="btn btn-primary" href="#" (click)="backToInformation()">Back to Information</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

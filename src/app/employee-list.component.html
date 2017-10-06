@@ -1,0 +1,71 @@
+<!--<section>-->
+    <!--<ul>-->
+        <!--<li *ngFor="let employee of employees" >-->
+            <!--<a href="#" [routerLink]="['/list', employee.id]">-->
+                <!--{{employee.name}}-->
+            <!--</a>-->
+
+        <!--</li>-->
+    <!--</ul>-->
+<!--</section>-->
+
+<div class="example-container mat-elevation-z4">
+    <div class="example-header">
+        <input mdInput #filter placeholder="Filter users">
+        <button class="btn btn-primary" href="#" [routerLink]="['/add']">Add New</button>
+    </div>
+
+    <md-table #table [dataSource]="dataSource">
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+
+        <ng-container mdColumnDef="id">
+            <md-header-cell *mdHeaderCellDef> ID </md-header-cell>
+            <md-cell *mdCellDef="let row"> {{row.id}} </md-cell>
+        </ng-container>
+
+
+        <ng-container mdColumnDef="name">
+            <md-header-cell *mdHeaderCellDef> Name </md-header-cell>
+            <md-cell *mdCellDef="let row"> {{row.name}} </md-cell>
+        </ng-container>
+
+        <ng-container mdColumnDef="email">
+            <md-header-cell *mdHeaderCellDef> Email </md-header-cell>
+            <md-cell *mdCellDef="let row"> {{row.email}} </md-cell>
+        </ng-container>
+
+        <ng-container mdColumnDef="phone">
+            <md-header-cell *mdHeaderCellDef> Phone </md-header-cell>
+            <md-cell *mdCellDef="let row"> {{row.phone}} </md-cell>
+        </ng-container>
+
+        <ng-container mdColumnDef="position">
+            <md-header-cell *mdHeaderCellDef> Position </md-header-cell>
+            <md-cell *mdCellDef="let row"> {{row.position}} </md-cell>
+        </ng-container>
+
+        <ng-container mdColumnDef="status">
+            <md-header-cell *mdHeaderCellDef> Status </md-header-cell>
+            <md-cell *mdCellDef="let row"> {{row.status === true ? 'Enable' : 'Disable'}} </md-cell>
+        </ng-container>
+
+        <ng-container mdColumnDef="action">
+            <md-header-cell *mdHeaderCellDef> Action </md-header-cell>
+            <md-cell *mdCellDef="let row"><a [routerLink]="['/employee', row.id]"> Edit</a> </md-cell>
+        </ng-container>
+
+        <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+        <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+    </md-table>
+
+    <md-paginator #paginator
+                  [length]="dataSource.filteredData.length"
+                  [pageIndex]="0"
+                  [pageSize]="5"
+                  [pageSizeOptions]="[1, 2, 5, 10]">
+    </md-paginator>
+
+</div>

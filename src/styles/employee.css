@@ -1,0 +1,19 @@
+.example-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+    vertical-align: middle;
+    position: absolute;
+    top: 200px;
+    width: 70%;
+    left: 15%;
+    height: 500px;
+    padding: 5px;
+}
+.add-employee {
+    height: 100%;
+}
+.add-content {
+    padding-left: 20px;
+    padding-top: 10px;
+}

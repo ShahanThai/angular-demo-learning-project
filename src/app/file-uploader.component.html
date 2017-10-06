@@ -1,0 +1,36 @@
+<div class="row preview-image">
+    <div class="img-wrap" *ngFor="let fileImg of imageSrcs; let i = index">
+        <i class="fa fa-window-close close" aria-hidden="true" (click)="removeImg(i)"></i>
+        <img [src]="fileImg.src"
+             (load)="handleImageLoad()"
+             [class.loaded]="fileImg.loaded" [attr.data-index]="i"/>
+    </div>
+
+</div>
+
+<div class="row">
+    <select name="position" id="uploadChoice" [(ngModel)]="uploadImageChoice"></select>
+</div>
+
+<div class="row" [hidden]="uploadImageChoice !== '1'">
+    <label class="uploader" ondragover="return false;"
+           [class.loaded]="loaded"
+           [style.outlineColor]="dragging ? activeColor : baseColor"
+           (dragenter)="handleDragEnter()"
+           (dragleave)="handleDragLeave()"
+           (drop)="handleDrop($event)">
+        Drag & drop files here...
+        <input type="file" name="file" accept="image/*"
+               (change)="handleInputChange($event)" multiple>
+    </label>
+
+</div>
+
+<div class="row" [hidden]="uploadImageChoice !== '2'">
+    <div class="form-group input-group">
+        <span class="input-group-addon img-upload-link" [attr.disabled]="!imageLink.value" [ngClass]="imageLink ? '' : 'disabled'" (click)="imageLink && getImgFromLink()"><i class="fa fa-file-image-o" aria-hidden="true"></i></span>
+        <input type="text" class="form-control" placeholder="Image URL" name="imageLink"
+               aria-describedby="basic-addon1" [(ngModel)]="imageLink" #imgLink>
+    </div>
+</div>
+
